@@ -3,6 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 import ImageStage from './components/ImageStage';
 import InfoStage from './components/InfoStage';
 import axios from 'axios';
+import ResponseModal from '@/components/shared/ResponseModal';
 
 const Home = () => {
 	const [name, setName] = useState('');
@@ -12,14 +13,12 @@ const Home = () => {
 	const [frontSideImage, setFrontSideImage] = useState(null);
 	const [selfieImage, setSelfieImage] = useState(null);
 	const [imageStage, setImageStage] = useState(false);
+	const [isModalActive, setIsModalActive] = useState(false);
+	const [modalType, setModalType] = useState('loading');
 
 	const submitHandler = () => {
-		console.log(name);
-		console.log(email);
-		console.log(orderId);
-		console.log(backSideImage);
-		console.log(frontSideImage);
-		console.log(selfieImage);
+		setModalType('loading');
+		setIsModalActive(true);
 
 		const images = [];
 		images.push({ images: frontSideImage }, { images: backSideImage });
@@ -41,10 +40,14 @@ const Home = () => {
 			.then((response) => {
 				// handle successfull upload here
 				console.log(response);
+				setModalType('success');
+				setIsModalActive(true);
 			})
 			.catch((err) => {
-				alert(err);
+				// handle error here
 				console.log(err);
+				setModalType('error');
+				setIsModalActive(true);
 			});
 	};
 
@@ -52,6 +55,7 @@ const Home = () => {
 		setImageStage(!imageStage);
 	};
 	const handleStartOver = () => {
+		setIsModalActive(false);
 		setImageStage(false);
 		setName('');
 		setEmail('');
@@ -71,9 +75,8 @@ const Home = () => {
 	const handleSelfieFile = (name, file, isValid) => {
 		setSelfieImage(file);
 	};
-
 	return (
-		<div className='flex flex-col items-center justify-center w-full min-h-screen bg-accent text-dark'>
+		<div className='flex flex-col items-center justify-center w-full min-h-screen bg-accent text-dark relative'>
 			{/* <div className='absolute top-42 left-0'>
 				<p>name: {name}</p>
 				<p>email: {email}</p>
@@ -82,6 +85,13 @@ const Home = () => {
 				<p>frontSideImage: {frontSideImage}</p>
 				<p>selfieImage: {selfieImage}</p>
 			</div> */}
+			{isModalActive && (
+				<ResponseModal
+					type={modalType}
+					handleStartOver={handleStartOver}
+					setIsModalActive={setIsModalActive}
+				/>
+			)}
 
 			<AnimatePresence>
 				{!imageStage && (
