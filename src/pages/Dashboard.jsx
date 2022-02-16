@@ -46,6 +46,7 @@ const Dashboard = () => {
 
 	useEffect(() => {
 		fetchEntries();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [searchQuery]);
 
 	const fetchEntries = async () => {

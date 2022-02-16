@@ -22,7 +22,7 @@ export const ImageModal = (props) => {
 			<motion.div
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
-				className='image-modal p-4 bg-white rounded shadow'
+				className='image-modal p-2 bg-white rounded shadow overflow-hidden'
 				style={{ maxWidth: '600px', maxHeight: '90%' }}
 			>
 				<div className='mb-2 flex justify-between'>
@@ -37,8 +37,8 @@ export const ImageModal = (props) => {
 				<img
 					src={process.env.REACT_APP_STATIC_URL + modalImage.data.value}
 					alt='Modal'
-					className='mx-auto'
-					style={{ maxWidth: '90%', maxHeight: '90%' }}
+					className='mx-auto rounded shadow-md object-contain'
+					style={{ maxWidth: '400px', maxHeight: '90%' }}
 				/>
 			</motion.div>
 		</div>
