@@ -26,7 +26,7 @@ export const EntriesTable = (props) => {
 	};
 
 	return (
-		<div className='container table w-full my-10'>
+		<div className='container table w-full'>
 			<div className='table-header'>
 				<div className='w-16 py-2 px-3 text-center border-r border-gray-300'>
 					#
@@ -50,7 +50,7 @@ export const EntriesTable = (props) => {
 					</div>
 				)}
 
-				{entries.length &&
+				{entries.length > 0 &&
 					entries.map((entry, index) => {
 						return (
 							<div key={index} className='bg-main flex table-row-el text-sm'>
@@ -107,7 +107,11 @@ export const EntriesTable = (props) => {
 							</div>
 						);
 					})}
-				{!entries.length && <p>Entries not found</p>}
+				{!entries.length && (
+					<div className='w-full flex py-10 text-center'>
+						<p className='w-full'>Entries not found</p>
+					</div>
+				)}
 			</div>
 		</div>
 	);

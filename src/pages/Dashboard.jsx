@@ -10,6 +10,7 @@ const Dashboard = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [modalImage, setModalImage] = useState({ data: {} });
 	const [isModalActive, setIsModalActive] = useState(false);
+	const [searchQuery, setSearchQuery] = useState('');
 
 	const downloadImage = () => {
 		const { value, type, email } = modalImage.data;
@@ -23,11 +24,14 @@ const Dashboard = () => {
 
 	useEffect(() => {
 		fetchEntries();
-	}, []);
+	}, [searchQuery]);
 
 	const fetchEntries = async () => {
+		const query = {
+			q: searchQuery,
+		};
 		setIsLoading(true);
-		getEntries()
+		getEntries(query)
 			.then((response) => {
 				setIsLoading(false);
 				const { entries = [] } = response;
@@ -68,6 +72,10 @@ const Dashboard = () => {
 		document.body.style.overflow = 'hidden';
 	};
 
+	const handleSearch = (e) => {
+		setSearchQuery(e.target.value);
+	};
+
 	return (
 		<div className='min-h-screen my-10'>
 			{isModalActive && (
@@ -77,8 +85,18 @@ const Dashboard = () => {
 					modalImage={modalImage}
 				/>
 			)}
-
 			<h1 className='text-xl text-center'>Entries</h1>
+
+			<div className='container my-4 pl-4'>
+				<label htmlFor='search font-medium text-dark'>Search</label>
+				<input
+					type='text'
+					name='search'
+					onChange={handleSearch}
+					className='shadow rounded ml-2 focus:outline-dark p-1 text-sm'
+				/>
+			</div>
+
 			<EntriesTable
 				entries={entriesData.data}
 				deleteEntry={handleDelete}
