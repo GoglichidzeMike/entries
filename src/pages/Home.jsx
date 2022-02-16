@@ -54,6 +54,7 @@ const Home = () => {
 	const handleStage = () => {
 		setImageStage(!imageStage);
 	};
+
 	const handleStartOver = () => {
 		setIsModalActive(false);
 		setImageStage(false);
@@ -75,16 +76,9 @@ const Home = () => {
 	const handleSelfieFile = (name, file, isValid) => {
 		setSelfieImage(file);
 	};
+
 	return (
 		<div className='flex flex-col items-center justify-center w-full min-h-screen bg-accent text-dark relative'>
-			{/* <div className='absolute top-42 left-0'>
-				<p>name: {name}</p>
-				<p>email: {email}</p>
-				<p>orderId: {orderId}</p>
-				<p>backSideImage: {backSideImage}</p>
-				<p>frontSideImage: {frontSideImage}</p>
-				<p>selfieImage: {selfieImage}</p>
-			</div> */}
 			{isModalActive && (
 				<ResponseModal
 					type={modalType}

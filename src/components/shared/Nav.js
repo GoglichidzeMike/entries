@@ -2,7 +2,7 @@ import Logo from '@/assets/logo.svg';
 
 const Nav = () => {
 	return (
-		<nav className='w-full fixed top-0 bg-darkAccent shadow-md'>
+		<nav className='w-full fixed top-0 bg-darkAccent shadow-md z-40'>
 			<div
 				className='w-full mx-auto flex justify-between items-center px-4 py-2'
 				style={{ maxWidth: '1200px' }}

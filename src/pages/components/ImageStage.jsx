@@ -4,7 +4,8 @@ import { motion } from 'framer-motion';
 import './ImageStage.scss';
 
 const ImageStage = (props) => {
-	const { handleBackSide, handleFrontSide, handleSelfie, submitHandler } = props;
+	const { handleBackSide, handleFrontSide, handleSelfie, submitHandler } =
+		props;
 	// const [images, setImages] = useState([]);
 	const [selfieToggle, setSelfieToggle] = useState(false);
 
@@ -60,7 +61,10 @@ const ImageStage = (props) => {
 						onChangeHandler={handleSelfie}
 					/>
 				</div>
-				<button onClick={submitHandler} className='w-full p-2 font-bold tracking-widest text-center transition-colors duration-300 ease-linear bg-third rounded-md shadow cursor-pointer text-dark hover:bg-secondary'>
+				<button
+					onClick={submitHandler}
+					className='w-full p-2 font-bold tracking-widest text-center transition-colors duration-300 ease-linear bg-third rounded-md shadow cursor-pointer text-dark hover:bg-secondary'
+				>
 					Submit
 				</button>
 			</div>
