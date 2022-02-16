@@ -15,3 +15,17 @@
 .table-row-el {
   @apply hover:bg-slate-300 transition-colors duration-200 ease-linear;
 }
+
+
+.image-preview-container{
+  @apply flex items-center;
+}
+
+.image-container {
+  @apply w-12 h-12 rounded mr-1 flex items-center overflow-hidden justify-center cursor-pointer;
+}
+
+.image-container img {
+  @apply rounded;
+  object-fit:contain;
+}
