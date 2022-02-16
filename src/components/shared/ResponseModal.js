@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import './ResponseModal.scss';
 
 const ResponseModal = (props) => {
@@ -5,7 +6,11 @@ const ResponseModal = (props) => {
 
 	return (
 		<div className='w-screen h-screen absolute top-0 left-0 flex items-center justify-center z-50 bg-slate-400 bg-opacity-60'>
-			<div className='border rounded-md px-4 py-6 bg-white w-96 max-w-full shadow-lg'>
+			<motion.div
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				className='border rounded-md px-4 py-6 bg-white w-96 max-w-full shadow-lg'
+			>
 				{type === 'loading' && (
 					<div className='w-full flex-col flex items-center justify-center p-12'>
 						<p className='text-center mb-1'>Processing</p>
@@ -55,7 +60,7 @@ const ResponseModal = (props) => {
 						</div>
 					</>
 				)}
-			</div>
+			</motion.div>
 		</div>
 	);
 };
