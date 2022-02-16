@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import ImageStage from './components/ImageStage';
 import InfoStage from './components/InfoStage';
-import axios from 'axios';
 import ResponseModal from '@/components/shared/ResponseModal';
+import { createEntry } from '@/api/dataProvider.js'
 
 const Home = () => {
 	const [name, setName] = useState('');
@@ -16,39 +16,31 @@ const Home = () => {
 	const [isModalActive, setIsModalActive] = useState(false);
 	const [modalType, setModalType] = useState('loading');
 
-	const submitHandler = () => {
+	const submitHandler = async () => {
 		setModalType('loading');
 		setIsModalActive(true);
 
-		const images = [];
-		images.push({ images: frontSideImage }, { images: backSideImage });
-		// handle submit here;
 		const formData = new FormData();
-
 		formData.append('name', name);
 		formData.append('email', email);
 		formData.append('orderId', orderId);
 		formData.append('cardFrontImg', frontSideImage);
 		formData.append('cardBackImg', backSideImage);
 		formData.append('selfieImg', selfieImage);
-		axios
-			.post('http://localhost:5555/api/entries', formData, {
-				headers: {
-					'Content-type': 'multipart/form-data',
-				},
-			})
-			.then((response) => {
-				// handle successfull upload here
-				console.log(response);
-				setModalType('success');
-				setIsModalActive(true);
-			})
-			.catch((err) => {
-				// handle error here
-				console.log(err);
-				setModalType('error');
-				setIsModalActive(true);
-			});
+
+
+		try {
+			const res = await createEntry(formData);
+			setModalType('success');
+			setIsModalActive(true);
+			console.log(res);
+		}
+		catch (err){
+			console.log(err);
+			setModalType('error');
+			setIsModalActive(true);
+		}
+		
 	};
 
 	const handleStage = () => {
@@ -73,6 +65,7 @@ const Home = () => {
 	const handleBackSideFile = (name, file, isValid) => {
 		setBackSideImage(file);
 	};
+	
 	const handleSelfieFile = (name, file, isValid) => {
 		setSelfieImage(file);
 	};
@@ -86,7 +79,6 @@ const Home = () => {
 					setIsModalActive={setIsModalActive}
 				/>
 			)}
-
 			<AnimatePresence>
 				{!imageStage && (
 					<InfoStage
