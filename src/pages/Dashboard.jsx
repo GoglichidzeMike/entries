@@ -4,6 +4,8 @@ import { EntriesTable } from './components/EntriesTable';
 import { ImageModal } from './components/ImageModal';
 import { saveAs } from 'file-saver';
 import './Dashboard.scss';
+//
+import toast, { Toaster } from 'react-hot-toast';
 
 const Dashboard = () => {
 	const [entriesData, setEntriesData] = useState({ data: [] });
@@ -12,12 +14,32 @@ const Dashboard = () => {
 	const [isModalActive, setIsModalActive] = useState(false);
 	const [searchQuery, setSearchQuery] = useState('');
 
+	const notify = (message) =>
+		toast.success(message, {
+			// icon: '👏',
+			position: 'top-right',
+			iconTheme: {
+				primary: 'green',
+				secondary: '#fff',
+			},
+			style: {
+				background: '#b9fbc0',
+				color: '#005f73',
+			},
+			// Aria
+			ariaProps: {
+				role: 'status',
+				'aria-live': 'polite',
+			},
+		});
+
 	const downloadImage = () => {
 		const { value, type, email } = modalImage.data;
 		saveAs(
 			process.env.REACT_APP_STATIC_URL + value,
 			type + '_' + email + '.' + value.split('.')[1]
 		); // Put your image url here.
+		notify('Image downloaded');
 		setIsModalActive(false);
 		document.body.style.overflow = 'scroll';
 	};
@@ -50,7 +72,7 @@ const Dashboard = () => {
 		deleteEntry(payload)
 			.then((response) => {
 				setIsLoading(false);
-				console.log(response);
+				notify('Entry Deleted');
 				fetchEntries();
 			})
 			.catch((error) => {
@@ -102,7 +124,9 @@ const Dashboard = () => {
 				deleteEntry={handleDelete}
 				isLoading={isLoading}
 				handleImageClick={handleImageClick}
+				notify={notify}
 			/>
+			<Toaster />
 		</div>
 	);
 };

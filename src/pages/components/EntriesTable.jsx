@@ -4,7 +4,7 @@ import { ImageContainer } from './ImageContainer';
 import { updateStatus } from '@/api/dataProvider.js';
 
 export const EntriesTable = (props) => {
-	const { entries, deleteEntry, isLoading, handleImageClick } = props;
+	const { entries, deleteEntry, isLoading, handleImageClick, notify } = props;
 
 	const handleStatusChange = (value) => (e) => {
 		// entryId, status
@@ -17,6 +17,7 @@ export const EntriesTable = (props) => {
 		updateStatus(payload)
 			.then((response) => {
 				console.log(response);
+				notify('Status Updated');
 				//TODO: Note create status change notification here
 			})
 			.catch((error) => {
